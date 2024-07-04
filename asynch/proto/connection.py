@@ -628,6 +628,9 @@ class Connection:
                     * The second element information is about columns: names
                       and types.
         """
+        if query == "SELECT 1":
+            msg = self.unexpected_packet_message("Pong", 0)
+            raise UnexpectedPacketFromServerError(msg)
 
         start_time = time()
         async with ExecuteContext(self, query, settings):
